@@ -427,14 +427,6 @@ resource "azurerm_private_endpoint" "pep" {
   }
 }
 
-##----------------------------------------------------------------------------- 
-## Locals declaration to determine the resource group in which exsisting private dns zone is present. 
-##-----------------------------------------------------------------------------
-locals {
-  resource_group_name = var.resource_group_name
-  location            = var.location
-}
-
 ##-----------------------------------------------------------------------------------------------------------------
 ## Monitor Diagnostic Setting - Configures diagnostic logging and monitoring for the Storage Account, sending
 ## logs and metrics to an Azure Monitor Log Analytics workspace, Event Hub, or Storage Account.
@@ -456,9 +448,11 @@ resource "azurerm_monitor_diagnostic_setting" "storage" {
       enabled  = var.metrics_enabled[count.index]
     }
   }
-
 }
 
+##----------------------------------------------------------------------------- 
+## Monitor Diagnostic Setting - Create diagnostic setting for storage Data. 
+##-----------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "datastorage" {
   provider                       = azurerm.main_sub
   depends_on                     = [azurerm_storage_account.storage]
@@ -487,6 +481,9 @@ resource "azurerm_monitor_diagnostic_setting" "datastorage" {
 
 }
 
+##----------------------------------------------------------------------------- 
+## Monitor Diagnostic Setting - Create diagnostic setting for storage-nic. 
+##-----------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "storage-nic" {
   provider                       = azurerm.main_sub
   depends_on                     = [azurerm_private_endpoint.pep]
@@ -507,6 +504,9 @@ resource "azurerm_monitor_diagnostic_setting" "storage-nic" {
   }
 }
 
+##----------------------------------------------------------------------------- 
+## Monitor Diagnostic Setting - Create diagnostic setting for storage blob. 
+##-----------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "storage_blob" {
   provider                       = azurerm.main_sub
   count                          = var.enable_blob_diagnostics ? 1 : 0
@@ -533,6 +533,9 @@ resource "azurerm_monitor_diagnostic_setting" "storage_blob" {
   }
 }
 
+##----------------------------------------------------------------------------- 
+## Monitor Diagnostic Setting - Create diagnostic setting for storage table. 
+##-----------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "storage_table" {
   provider                       = azurerm.main_sub
   count                          = var.enable_table_diagnostics ? 1 : 0
@@ -559,6 +562,9 @@ resource "azurerm_monitor_diagnostic_setting" "storage_table" {
   }
 }
 
+##----------------------------------------------------------------------------- 
+## Monitor Diagnostic Setting - Create diagnostic setting for storage queue. 
+##-----------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "storage_queue" {
   provider                       = azurerm.main_sub
   count                          = var.enable_queue_diagnostics ? 1 : 0
@@ -585,6 +591,9 @@ resource "azurerm_monitor_diagnostic_setting" "storage_queue" {
   }
 }
 
+##----------------------------------------------------------------------------- 
+## Monitor Diagnostic Setting - Create diagnostic setting for storage file. 
+##-----------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "storage_file" {
   provider                       = azurerm.main_sub
   count                          = var.enable_file_diagnostics ? 1 : 0

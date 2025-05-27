@@ -1,13 +1,11 @@
 provider "azurerm" {
   features {}
   storage_use_azuread = true
-  subscription_id     = "123456---00000----78945"
 }
 
 provider "azurerm" {
   features {}
   alias           = "peer"
-  subscription_id = "123456---00000----78945"
 }
 
 ##----------------------------------------------------------------------------- 

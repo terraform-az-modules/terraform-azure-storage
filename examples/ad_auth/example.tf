@@ -1,13 +1,11 @@
 provider "azurerm" {
   features {}
   storage_use_azuread = true
-  subscription_id     = "123456---00000----78945"
 }
 
 provider "azurerm" {
   features {}
   alias           = "peer"
-  subscription_id = "123456---00000----78945"
 }
 
 data "azurerm_client_config" "current_client_config" {}
@@ -21,37 +19,6 @@ module "resource_group" {
   name        = "app1"
   environment = "test"
   location    = "North Europe"
-}
-
-##----------------------------------------------------------------------------- 
-## Virtual Network module call.
-##-----------------------------------------------------------------------------
-module "vnet" {
-  source              = "clouddrove/vnet/azure"
-  version             = "1.0.4"
-  name                = "app1"
-  environment         = "test"
-  label_order         = ["name", "environment"]
-  resource_group_name = module.resource_group.resource_group_name
-  location            = module.resource_group.resource_group_location
-  address_spaces      = ["10.0.0.0/16"]
-}
-
-##----------------------------------------------------------------------------- 
-## Subnet module call.
-##-----------------------------------------------------------------------------
-module "subnet" {
-  source               = "clouddrove/subnet/azure"
-  version              = "1.2.0"
-  name                 = "app1"
-  environment          = "test"
-  label_order          = ["name", "environment"]
-  resource_group_name  = module.resource_group.resource_group_name
-  location             = module.resource_group.resource_group_location
-  virtual_network_name = module.vnet.vnet_name
-  service_endpoints    = ["Microsoft.Storage"]
-  subnet_names    = ["subnet1"]
-  subnet_prefixes = ["10.0.1.0/24"]
 }
 
 ##----------------------------------------------------------------------------- 
@@ -101,7 +68,4 @@ module "storage" {
   file_shares = [
     { name = "fileshare", quota = "10" },
   ]
-
-  virtual_network_id = module.vnet.vnet_id
-  subnet_id          = module.subnet.default_subnet_id[0]
 }

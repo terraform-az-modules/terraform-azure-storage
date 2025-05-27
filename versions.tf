@@ -9,9 +9,8 @@ terraform {
 terraform {
   required_providers {
     azurerm = {
-      source                = "hashicorp/azurerm"
-      configuration_aliases = [azurerm.main_sub, azurerm.dns_sub, azurerm.peer]
-      version               = ">=3.114.0"
+      source  = "hashicorp/azurerm"
+      version = ">=3.114.0"
     }
   }
 }

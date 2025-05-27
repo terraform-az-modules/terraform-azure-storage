@@ -37,7 +37,7 @@ variable "environment" {
 
 variable "repository" {
   type        = string
-  default     = "https://github.com/clouddrove/terraform-azure-storage.git"
+  default     = "https://github.com/terraform-az-modules/terraform-azure-storage.git"
   description = "Terraform current module repo"
 }
 
@@ -84,12 +84,6 @@ variable "location" {
   type        = string
   default     = "North Europe"
   description = "The location/region to keep all your network resources. To get the list of all locations with table format from azure cli, run 'az account list-locations -o table'"
-}
-
-variable "storage_account_name" {
-  type        = string
-  default     = ""
-  description = "The name of the azure storage account"
 }
 
 variable "account_tier" {
@@ -439,18 +433,6 @@ variable "admin_objects_ids" {
 ##-----------------------------------------------------------------------------
 ## Private Endpoints
 ##-----------------------------------------------------------------------------
-variable "virtual_network_id" {
-  type        = string
-  default     = ""
-  description = "The name of the virtual network"
-}
-
-variable "subnet_id" {
-  type        = string
-  default     = ""
-  description = "The resource ID of the subnet"
-}
-
 variable "enable_private_endpoint" {
   type        = bool
   default     = false
@@ -527,9 +509,6 @@ variable "minute_metrics" {
   ]
 }
 
-##-----------------------------------------------------------------------------
-## Hour Metrics
-##-----------------------------------------------------------------------------
 variable "enable_hour_metrics" {
   type        = bool
   default     = false
@@ -716,7 +695,7 @@ variable "multi_sub_vnet_link" {
 variable "key_vault_rbac_auth_enabled" {
   type        = bool
   default     = true
-  description = "Is key vault has role base access enable or not."
+  description = "Specifies whether Role-Based Access Control (RBAC) is enabled for the Key Vault."
 }
 
 variable "cmk_encryption_enabled" {
