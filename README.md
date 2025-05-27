@@ -73,32 +73,136 @@ This table contains both Prerequisites and Providers:
 
 ## Inputs and Outputs
 
-### Inputs
+## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| label_order | Label order, e.g. `name`,`application`,`centralus`. | `list(any)` | <pre>["name","environment",  "location"]</pre> | no |
+| <a name="input_Metric_enable"></a> [Metric\_enable](#input\_Metric\_enable) | Is this Diagnostic Metric enabled? Defaults to true. | `bool` | `true` | no |
+| <a name="input_access_tier"></a> [access\_tier](#input\_access\_tier) | Defines the access tier for BlobStorage and StorageV2 accounts. Valid options are Hot and Cool. | `string` | `"Hot"` | no |
+| <a name="input_account_kind"></a> [account\_kind](#input\_account\_kind) | The type of storage account. Valid options are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2. | `string` | `"StorageV2"` | no |
+| <a name="input_account_replication_type"></a> [account\_replication\_type](#input\_account\_replication\_type) | Defines the type of replication to use for this storage account. Valid options are LRS, GRS, RAGRS, ZRS, GZRS and RAGZRS. | `string` | `"LRS"` | no |
+| <a name="input_account_tier"></a> [account\_tier](#input\_account\_tier) | Defines the Tier to use for this storage account. | `string` | `"Standard"` | no |
+| <a name="input_admin_objects_ids"></a> [admin\_objects\_ids](#input\_admin\_objects\_ids) | IDs of the objects that can do all operations on all keys, secrets and certificates. | `list(string)` | `[]` | no |
+| <a name="input_alias_sub"></a> [alias\_sub](#input\_alias\_sub) | n/a | `string` | `null` | no |
+| <a name="input_allow_nested_items_to_be_public"></a> [allow\_nested\_items\_to\_be\_public](#input\_allow\_nested\_items\_to\_be\_public) | Allow or disallow nested items within this Account to opt into being public. Defaults to true. | `bool` | `false` | no |
+| <a name="input_allowed_copy_scope"></a> [allowed\_copy\_scope](#input\_allowed\_copy\_scope) | Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. Possible values are AAD and PrivateLink. | `string` | `"PrivateLink"` | no |
+| <a name="input_blob_logs"></a> [blob\_logs](#input\_blob\_logs) | Log categories for Blob service diagnostics. | `list(string)` | <pre>[<br>  "StorageRead",<br>  "StorageWrite",<br>  "StorageDelete"<br>]</pre> | no |
+| <a name="input_blob_metrics"></a> [blob\_metrics](#input\_blob\_metrics) | Metric categories for Blob service diagnostics. | `list(string)` | <pre>[<br>  "Transaction",<br>  "Capacity"<br>]</pre> | no |
+| <a name="input_cmk_encryption_enabled"></a> [cmk\_encryption\_enabled](#input\_cmk\_encryption\_enabled) | Whether to create CMK or not | `bool` | `false` | no |
+| <a name="input_containers_list"></a> [containers\_list](#input\_containers\_list) | List of containers to create and their access levels. | `list(object({ name = string, access_type = string }))` | `[]` | no |
+| <a name="input_cross_tenant_replication_enabled"></a> [cross\_tenant\_replication\_enabled](#input\_cross\_tenant\_replication\_enabled) | Should cross Tenant replication be enabled? Defaults to true. | `bool` | `true` | no |
+| <a name="input_custom_domain_name"></a> [custom\_domain\_name](#input\_custom\_domain\_name) | The Custom Domain Name to use for the Storage Account, which will be validated by Azure. | `string` | `null` | no |
+| <a name="input_custom_name"></a> [custom\_name](#input\_custom\_name) | Define your custom name to override default naming convention | `string` | `null` | no |
+| <a name="input_datastorages"></a> [datastorages](#input\_datastorages) | n/a | `list(string)` | <pre>[<br>  "blob",<br>  "queue",<br>  "table",<br>  "file"<br>]</pre> | no |
+| <a name="input_default_to_oauth_authentication"></a> [default\_to\_oauth\_authentication](#input\_default\_to\_oauth\_authentication) | Default to Azure Active Directory authorization in the Azure portal when accessing the Storage Account. The default value is false | `bool` | `false` | no |
+| <a name="input_deployment_mode"></a> [deployment\_mode](#input\_deployment\_mode) | Specifies how the infrastructure/resource is deployed | `string` | `"terraform"` | no |
+| <a name="input_diff_sub"></a> [diff\_sub](#input\_diff\_sub) | The name of the addon vnet | `bool` | `false` | no |
+| <a name="input_edge_zone"></a> [edge\_zone](#input\_edge\_zone) | Specifies the Edge Zone within the Azure Region where this Storage Account should exist. | `string` | `null` | no |
+| <a name="input_enable_advanced_threat_protection"></a> [enable\_advanced\_threat\_protection](#input\_enable\_advanced\_threat\_protection) | Boolean flag which controls if advanced threat protection is enabled. | `bool` | `false` | no |
+| <a name="input_enable_blob_diagnostics"></a> [enable\_blob\_diagnostics](#input\_enable\_blob\_diagnostics) | Enable diagnostic settings for Blob service. | `bool` | `false` | no |
+| <a name="input_enable_diagnostic"></a> [enable\_diagnostic](#input\_enable\_diagnostic) | Set to false to prevent the module from creating the diagnosys setting for the NSG Resource.. | `bool` | `false` | no |
+| <a name="input_enable_file_diagnostics"></a> [enable\_file\_diagnostics](#input\_enable\_file\_diagnostics) | Enable diagnostic settings for File service. | `bool` | `false` | no |
+| <a name="input_enable_file_share_cors_rules"></a> [enable\_file\_share\_cors\_rules](#input\_enable\_file\_share\_cors\_rules) | Whether or not enable file share cors rules. | `bool` | `false` | no |
+| <a name="input_enable_hour_metrics"></a> [enable\_hour\_metrics](#input\_enable\_hour\_metrics) | Enable or disable the creation of the hour\_metrics block. | `bool` | `false` | no |
+| <a name="input_enable_https_traffic_only"></a> [enable\_https\_traffic\_only](#input\_enable\_https\_traffic\_only) | Boolean flag which forces HTTPS if enabled, see here for more information. | `bool` | `true` | no |
+| <a name="input_enable_minute_metrics"></a> [enable\_minute\_metrics](#input\_enable\_minute\_metrics) | Enable or disable the creation of the minute\_metrics block. | `bool` | `false` | no |
+| <a name="input_enable_private_endpoint"></a> [enable\_private\_endpoint](#input\_enable\_private\_endpoint) | enable or disable private endpoint to storage account | `bool` | `false` | no |
+| <a name="input_enable_private_link_access"></a> [enable\_private\_link\_access](#input\_enable\_private\_link\_access) | Enable or disable the creation of the private\_link\_access. | `bool` | `false` | no |
+| <a name="input_enable_queue_diagnostics"></a> [enable\_queue\_diagnostics](#input\_enable\_queue\_diagnostics) | Enable diagnostic settings for Queue service. | `bool` | `false` | no |
+| <a name="input_enable_queue_properties"></a> [enable\_queue\_properties](#input\_enable\_queue\_properties) | Enable or disable the creation of the queue properties | `bool` | `false` | no |
+| <a name="input_enable_routing"></a> [enable\_routing](#input\_enable\_routing) | Enable or disable the creation of the routing block. | `bool` | `false` | no |
+| <a name="input_enable_sas_policy"></a> [enable\_sas\_policy](#input\_enable\_sas\_policy) | Enable or disable the creation of the sas\_policy block. | `bool` | `false` | no |
+| <a name="input_enable_table_diagnostics"></a> [enable\_table\_diagnostics](#input\_enable\_table\_diagnostics) | Enable diagnostic settings for Table service. | `bool` | `false` | no |
+| <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
+| <a name="input_eventhub_authorization_rule_id"></a> [eventhub\_authorization\_rule\_id](#input\_eventhub\_authorization\_rule\_id) | Eventhub authorization rule id to pass it to destination details of diagnosys setting of NSG. | `string` | `null` | no |
+| <a name="input_eventhub_name"></a> [eventhub\_name](#input\_eventhub\_name) | Eventhub Name to pass it to destination details of diagnosys setting of NSG. | `string` | `null` | no |
+| <a name="input_expiration_date"></a> [expiration\_date](#input\_expiration\_date) | Expiration UTC datetime (Y-m-d'T'H:M:S'Z') | `string` | `"2034-10-22T18:29:59Z"` | no |
+| <a name="input_extra_tags"></a> [extra\_tags](#input\_extra\_tags) | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(string)` | `null` | no |
+| <a name="input_file_logs"></a> [file\_logs](#input\_file\_logs) | Log categories for File service diagnostics. | `list(string)` | <pre>[<br>  "StorageRead",<br>  "StorageWrite",<br>  "StorageDelete"<br>]</pre> | no |
+| <a name="input_file_metrics"></a> [file\_metrics](#input\_file\_metrics) | Metric categories for File service diagnostics. | `list(string)` | <pre>[<br>  "Transaction",<br>  "Capacity"<br>]</pre> | no |
+| <a name="input_file_share_authentication"></a> [file\_share\_authentication](#input\_file\_share\_authentication) | Storage Account file shares authentication configuration. | <pre>object({<br>    directory_type                 = string<br>    default_share_level_permission = optional(string, "None")<br>    active_directory = optional(object({<br>      storage_sid         = optional(string)<br>      domain_name         = string<br>      domain_sid          = optional(string)<br>      domain_guid         = optional(string)<br>      forest_name         = optional(string)<br>      netbios_domain_name = optional(string)<br>    }))<br>  })</pre> | `null` | no |
+| <a name="input_file_share_cors_rules"></a> [file\_share\_cors\_rules](#input\_file\_share\_cors\_rules) | Storage Account file shares CORS rule. | <pre>list(object({<br>    allowed_headers    = list(string)<br>    allowed_methods    = list(string)<br>    allowed_origins    = list(string)<br>    exposed_headers    = list(string)<br>    max_age_in_seconds = number<br>  }))</pre> | `null` | no |
+| <a name="input_file_share_properties_smb"></a> [file\_share\_properties\_smb](#input\_file\_share\_properties\_smb) | Storage Account file shares smb properties. | <pre>object({<br>    versions                        = optional(list(string))<br>    authentication_types            = optional(list(string))<br>    kerberos_ticket_encryption_type = optional(list(string))<br>    channel_encryption_type         = optional(list(string))<br>    multichannel_enabled            = optional(bool)<br>  })</pre> | `null` | no |
+| <a name="input_file_share_retention_policy_in_days"></a> [file\_share\_retention\_policy\_in\_days](#input\_file\_share\_retention\_policy\_in\_days) | Storage Account file shares retention policy in days. | `number` | `null` | no |
+| <a name="input_file_shares"></a> [file\_shares](#input\_file\_shares) | List of containers to create and their access levels. | `list(object({ name = string, quota = number }))` | `[]` | no |
+| <a name="input_hour_metrics"></a> [hour\_metrics](#input\_hour\_metrics) | n/a | <pre>object({<br>    enabled               = bool<br>    version               = string<br>    include_apis          = bool<br>    retention_policy_days = number<br>  })</pre> | <pre>{<br>  "enabled": false,<br>  "include_apis": false,<br>  "retention_policy_days": 7,<br>  "version": ""<br>}</pre> | no |
+| <a name="input_identity_type"></a> [identity\_type](#input\_identity\_type) | Specifies the type of Managed Service Identity that should be configured on this Storage Account. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned` (to enable both). | `string` | `"UserAssigned"` | no |
+| <a name="input_infrastructure_encryption_enabled"></a> [infrastructure\_encryption\_enabled](#input\_infrastructure\_encryption\_enabled) | Is infrastructure encryption enabled? Changing this forces a new resource to be created. Defaults to false. | `bool` | `true` | no |
+| <a name="input_is_hns_enabled"></a> [is\_hns\_enabled](#input\_is\_hns\_enabled) | Is Hierarchical Namespace enabled? This can be used with Azure Data Lake Storage Gen 2. Changing this forces a new resource to be created. | `bool` | `false` | no |
+| <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | n/a | `string` | `""` | no |
+| <a name="input_key_vault_rbac_auth_enabled"></a> [key\_vault\_rbac\_auth\_enabled](#input\_key\_vault\_rbac\_auth\_enabled) | Is key vault has role base access enable or not. | `bool` | `true` | no |
+| <a name="input_label_order"></a> [label\_order](#input\_label\_order) | The order of labels used to construct resource names or tags. If not specified, defaults to ['name', 'environment', 'location']. | `list(any)` | <pre>[<br>  "name",<br>  "environment",<br>  "location"<br>]</pre> | no |
+| <a name="input_large_file_share_enabled"></a> [large\_file\_share\_enabled](#input\_large\_file\_share\_enabled) | Is Large File Share Enabled? | `bool` | `false` | no |
+| <a name="input_location"></a> [location](#input\_location) | The location/region to keep all your network resources. To get the list of all locations with table format from azure cli, run 'az account list-locations -o table' | `string` | `"North Europe"` | no |
+| <a name="input_log_analytics_destination_type"></a> [log\_analytics\_destination\_type](#input\_log\_analytics\_destination\_type) | Possible values are AzureDiagnostics and Dedicated, default to AzureDiagnostics. When set to Dedicated, logs sent to a Log Analytics workspace will go into resource specific tables, instead of the legacy AzureDiagnostics table. | `string` | `"AzureDiagnostics"` | no |
+| <a name="input_log_analytics_workspace_id"></a> [log\_analytics\_workspace\_id](#input\_log\_analytics\_workspace\_id) | log analytics workspace id to pass it to destination details of diagnosys setting of NSG. | `string` | `null` | no |
+| <a name="input_logs"></a> [logs](#input\_logs) | n/a | `list(string)` | <pre>[<br>  "StorageWrite",<br>  "StorageRead",<br>  "StorageDelete"<br>]</pre> | no |
+| <a name="input_managedby"></a> [managedby](#input\_managedby) | ManagedBy, eg 'terraform-az-modules'. | `string` | `"terraform-az-modules"` | no |
+| <a name="input_management_policy"></a> [management\_policy](#input\_management\_policy) | Configure Azure Storage firewalls and virtual networks | <pre>list(object({<br>    prefix_match                                                   = set(string)<br>    tier_to_cool_after_days                                        = number<br>    tier_to_archive_after_days                                     = number<br>    delete_after_days                                              = number<br>    auto_tier_to_hot_from_cool_enabled                             = bool<br>    delete_after_days_since_creation_greater_than                  = number<br>    delete_after_days_since_last_access_time_greater_than          = number<br>    delete_after_days_since_modification_greater_than              = number<br>    tier_to_archive_after_days_since_creation_greater_than         = number<br>    tier_to_archive_after_days_since_last_access_time_greater_than = number<br>    tier_to_archive_after_days_since_last_tier_change_greater_than = number<br>    tier_to_archive_after_days_since_modification_greater_than     = number<br>    tier_to_cold_after_days_since_creation_greater_than            = number<br>    tier_to_cold_after_days_since_last_access_time_greater_than    = number<br>    tier_to_cool_after_days_since_modification_greater_than        = number<br>    tier_to_cool_after_days_since_creation_greater_than            = number<br>    tier_to_cool_after_days_since_last_access_time_greater_than    = number<br>    snapshot_delete_after_days                                     = number<br>  }))</pre> | <pre>[<br>  {<br>    "auto_tier_to_hot_from_cool_enabled": "true",<br>    "delete_after_days": 100,<br>    "delete_after_days_since_creation_greater_than": 60,<br>    "delete_after_days_since_last_access_time_greater_than": 30,<br>    "delete_after_days_since_modification_greater_than": 365,<br>    "prefix_match": null,<br>    "snapshot_delete_after_days": 30,<br>    "tier_to_archive_after_days": 50,<br>    "tier_to_archive_after_days_since_creation_greater_than": 60,<br>    "tier_to_archive_after_days_since_last_access_time_greater_than": 30,<br>    "tier_to_archive_after_days_since_last_tier_change_greater_than": 60,<br>    "tier_to_archive_after_days_since_modification_greater_than": 90,<br>    "tier_to_cold_after_days_since_creation_greater_than": 90,<br>    "tier_to_cold_after_days_since_last_access_time_greater_than": 60,<br>    "tier_to_cool_after_days": 0,<br>    "tier_to_cool_after_days_since_creation_greater_than": 60,<br>    "tier_to_cool_after_days_since_last_access_time_greater_than": 60,<br>    "tier_to_cool_after_days_since_modification_greater_than": 30<br>  }<br>]</pre> | no |
+| <a name="input_management_policy_enable"></a> [management\_policy\_enable](#input\_management\_policy\_enable) | n/a | `bool` | `false` | no |
+| <a name="input_metrics"></a> [metrics](#input\_metrics) | n/a | `list(string)` | <pre>[<br>  "Transaction",<br>  "Capacity"<br>]</pre> | no |
+| <a name="input_metrics_enabled"></a> [metrics\_enabled](#input\_metrics\_enabled) | n/a | `list(bool)` | <pre>[<br>  true,<br>  true<br>]</pre> | no |
+| <a name="input_min_tls_version"></a> [min\_tls\_version](#input\_min\_tls\_version) | The minimum supported TLS version for the storage account | `string` | `"TLS1_2"` | no |
+| <a name="input_minute_metrics"></a> [minute\_metrics](#input\_minute\_metrics) | n/a | <pre>list(object({<br>    enabled               = bool<br>    version               = string<br>    include_apis          = bool<br>    retention_policy_days = number<br>  }))</pre> | <pre>[<br>  {<br>    "enabled": false,<br>    "include_apis": false,<br>    "retention_policy_days": 7,<br>    "version": ""<br>  }<br>]</pre> | no |
+| <a name="input_multi_sub_vnet_link"></a> [multi\_sub\_vnet\_link](#input\_multi\_sub\_vnet\_link) | Flag to control creation of vnet link for dns zone in different subscription | `bool` | `false` | no |
+| <a name="input_name"></a> [name](#input\_name) | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
+| <a name="input_network_rules"></a> [network\_rules](#input\_network\_rules) | List of objects that represent the configuration of each network rule. | <pre>list(object({<br>    default_action             = string<br>    ip_rules                   = list(string)<br>    virtual_network_subnet_ids = optional(list(string), [])<br>    bypass                     = optional(list(string), [])<br>  }))</pre> | `[]` | no |
+| <a name="input_nfsv3_enabled"></a> [nfsv3\_enabled](#input\_nfsv3\_enabled) | Is NFSv3 protocol enabled? Changing this forces a new resource to be created. | `bool` | `false` | no |
+| <a name="input_private_dns_zone_ids"></a> [private\_dns\_zone\_ids](#input\_private\_dns\_zone\_ids) | The IDs of a private DNS zone. | `string` | `null` | no |
+| <a name="input_private_link_access"></a> [private\_link\_access](#input\_private\_link\_access) | List of Privatelink objects to allow access from. | <pre>list(object({<br>    endpoint_resource_id = string<br>    endpoint_tenant_id   = string<br>  }))</pre> | `[]` | no |
+| <a name="input_public_network_access_enabled"></a> [public\_network\_access\_enabled](#input\_public\_network\_access\_enabled) | Whether the public network access is enabled? Defaults to true. | `bool` | `true` | no |
+| <a name="input_queue_encryption_key_type"></a> [queue\_encryption\_key\_type](#input\_queue\_encryption\_key\_type) | The encryption type of the queue service. Possible values are 'Service' and 'Account'. | `string` | `"Account"` | no |
+| <a name="input_queue_logs"></a> [queue\_logs](#input\_queue\_logs) | Log categories for Queue service diagnostics. | `list(string)` | <pre>[<br>  "StorageRead",<br>  "StorageWrite",<br>  "StorageDelete"<br>]</pre> | no |
+| <a name="input_queue_metrics"></a> [queue\_metrics](#input\_queue\_metrics) | Metric categories for Queue service diagnostics. | `list(string)` | <pre>[<br>  "Transaction",<br>  "Capacity"<br>]</pre> | no |
+| <a name="input_queue_properties_logging"></a> [queue\_properties\_logging](#input\_queue\_properties\_logging) | Logging queue properties | <pre>object({<br>    delete                = optional(bool)<br>    read                  = optional(bool)<br>    write                 = optional(bool)<br>    version               = optional(string)<br>    retention_policy_days = optional(number)<br>  })</pre> | <pre>{<br>  "delete": true,<br>  "read": true,<br>  "retention_policy_days": 7,<br>  "version": "1.0",<br>  "write": true<br>}</pre> | no |
+| <a name="input_queues"></a> [queues](#input\_queues) | List of storages queues | `list(string)` | `[]` | no |
+| <a name="input_repository"></a> [repository](#input\_repository) | Terraform current module repo | `string` | `"https://github.com/terraform-az-modules/terraform-azure-storage.git"` | no |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | A container that holds related resources for an Azure solution | `string` | `""` | no |
+| <a name="input_resource_position_prefix"></a> [resource\_position\_prefix](#input\_resource\_position\_prefix) | Controls the placement of the resource type keyword (e.g., "vnet", "ddospp") in the resource name.<br><br>- If true, the keyword is prepended: "stor-core-dev".<br>- If false, the keyword is appended: "core-dev-stor".<br><br>This helps maintain naming consistency based on organizational preferences. | `bool` | `true` | no |
+| <a name="input_restore_policy"></a> [restore\_policy](#input\_restore\_policy) | Wheteher or not create restore policy | `bool` | `false` | no |
+| <a name="input_rotation_policy"></a> [rotation\_policy](#input\_rotation\_policy) | n/a | <pre>map(object({<br>    time_before_expiry   = string<br>    expire_after         = string<br>    notify_before_expiry = string<br>  }))</pre> | `null` | no |
+| <a name="input_rotation_policy_enabled"></a> [rotation\_policy\_enabled](#input\_rotation\_policy\_enabled) | Whether or not to enable rotation policy | `bool` | `false` | no |
+| <a name="input_routing"></a> [routing](#input\_routing) | n/a | <pre>list(object({<br>    publish_internet_endpoints  = bool<br>    publish_microsoft_endpoints = bool<br>    choice                      = string<br>  }))</pre> | <pre>[<br>  {<br>    "choice": "MicrosoftRouting",<br>    "publish_internet_endpoints": false,<br>    "publish_microsoft_endpoints": false<br>  }<br>]</pre> | no |
+| <a name="input_sas_policy_settings"></a> [sas\_policy\_settings](#input\_sas\_policy\_settings) | n/a | <pre>list(object({<br>    expiration_period = string<br>    expiration_action = string<br>  }))</pre> | <pre>[<br>  {<br>    "expiration_action": "Log",<br>    "expiration_period": "7.00:00:00"<br>  }<br>]</pre> | no |
+| <a name="input_sftp_enabled"></a> [sftp\_enabled](#input\_sftp\_enabled) | Boolean, enable SFTP for the storage account | `bool` | `false` | no |
+| <a name="input_shared_access_key_enabled"></a> [shared\_access\_key\_enabled](#input\_shared\_access\_key\_enabled) | Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is true. | `bool` | `true` | no |
+| <a name="input_static_website_config"></a> [static\_website\_config](#input\_static\_website\_config) | Static website configuration. Can only be set when the `account_kind` is set to `StorageV2` or `BlockBlobStorage`. | <pre>object({<br>    index_document     = optional(string)<br>    error_404_document = optional(string)<br>  })</pre> | `null` | no |
+| <a name="input_storage_account_id"></a> [storage\_account\_id](#input\_storage\_account\_id) | Storage account id to pass it to destination details of diagnosys setting of NSG. | `string` | `null` | no |
+| <a name="input_storage_account_name"></a> [storage\_account\_name](#input\_storage\_account\_name) | The name of the azure storage account | `string` | `""` | no |
+| <a name="input_storage_blob_cors_rule"></a> [storage\_blob\_cors\_rule](#input\_storage\_blob\_cors\_rule) | Storage Account blob CORS rule. Please refer to the [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#cors_rule) for more information. | <pre>object({<br>    allowed_headers    = list(string)<br>    allowed_methods    = list(string)<br>    allowed_origins    = list(string)<br>    exposed_headers    = list(string)<br>    max_age_in_seconds = number<br>  })</pre> | `null` | no |
+| <a name="input_storage_blob_data_protection"></a> [storage\_blob\_data\_protection](#input\_storage\_blob\_data\_protection) | Storage account blob Data protection parameters. | <pre>object({<br>    change_feed_enabled                       = optional(bool, false)<br>    versioning_enabled                        = optional(bool, false)<br>    last_access_time_enabled                  = optional(bool, false)<br>    delete_retention_policy_in_days           = optional(number, 0)<br>    container_delete_retention_policy_in_days = optional(number, 0)<br>    container_point_in_time_restore           = optional(bool, false)<br>  })</pre> | <pre>{<br>  "change_feed_enabled": false,<br>  "container_delete_retention_policy_in_days": 7,<br>  "delete_retention_policy_in_days": 7,<br>  "last_access_time_enabled": false,<br>  "versioning_enabled": false<br>}</pre> | no |
+| <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | The resource ID of the subnet | `string` | `""` | no |
+| <a name="input_table_encryption_key_type"></a> [table\_encryption\_key\_type](#input\_table\_encryption\_key\_type) | The encryption type of the table service. Possible values are 'Service' and 'Account'. | `string` | `"Account"` | no |
+| <a name="input_table_logs"></a> [table\_logs](#input\_table\_logs) | Log categories for Table service diagnostics. | `list(string)` | <pre>[<br>  "StorageRead",<br>  "StorageWrite",<br>  "StorageDelete"<br>]</pre> | no |
+| <a name="input_table_metrics"></a> [table\_metrics](#input\_table\_metrics) | Metric categories for Table service diagnostics. | `list(string)` | <pre>[<br>  "Transaction",<br>  "Capacity"<br>]</pre> | no |
+| <a name="input_tables"></a> [tables](#input\_tables) | List of storage tables. | `list(string)` | `[]` | no |
+| <a name="input_use_subdomain"></a> [use\_subdomain](#input\_use\_subdomain) | Should the Custom Domain Name be validated by using indirect CNAME validation? | `bool` | `false` | no |
+| <a name="input_virtual_network_id"></a> [virtual\_network\_id](#input\_virtual\_network\_id) | The name of the virtual network | `string` | `""` | no |
 
-### Outputs
+## Outputs
 
 | Name | Description |
 |------|-------------|
-| label_order | Label order, e.g. `name`,`application`,`centralus`. |
+| <a name="output_containers"></a> [containers](#output\_containers) | Map of containers. |
+| <a name="output_file_shares"></a> [file\_shares](#output\_file\_shares) | Map of Storage SMB file shares. |
+| <a name="output_queues"></a> [queues](#output\_queues) | Map of Storage SMB file shares. |
+| <a name="output_storage_account_id"></a> [storage\_account\_id](#output\_storage\_account\_id) | The ID of the storage account. |
+| <a name="output_storage_account_name"></a> [storage\_account\_name](#output\_storage\_account\_name) | The name of the storage account. |
+| <a name="output_storage_account_primary_blob_endpoint"></a> [storage\_account\_primary\_blob\_endpoint](#output\_storage\_account\_primary\_blob\_endpoint) | The endpoint URL for blob storage in the primary location. |
+| <a name="output_storage_account_primary_location"></a> [storage\_account\_primary\_location](#output\_storage\_account\_primary\_location) | The primary location of the storage account |
+| <a name="output_storage_account_primary_web_endpoint"></a> [storage\_account\_primary\_web\_endpoint](#output\_storage\_account\_primary\_web\_endpoint) | The endpoint URL for web storage in the primary location. |
+| <a name="output_storage_account_primary_web_host"></a> [storage\_account\_primary\_web\_host](#output\_storage\_account\_primary\_web\_host) | The hostname with port if applicable for web storage in the primary location. |
+| <a name="output_storage_primary_access_key"></a> [storage\_primary\_access\_key](#output\_storage\_primary\_access\_key) | The primary access key for the storage account |
+| <a name="output_storage_primary_connection_string"></a> [storage\_primary\_connection\_string](#output\_storage\_primary\_connection\_string) | The primary connection string for the storage account |
+| <a name="output_tables"></a> [tables](#output\_tables) | Map of Storage SMB file shares. |
+<!-- END_TF_DOCS -->
 
 
-
-<!-- 
 ## Module Dependencies
 
 This module has dependencies on:
 
-- [Labels Module](https://github.com/terraform-az-modules/terraform-azure-tags): Provides resource tagging.
- -->
-
-
-## Module Dependencies
-
-This module has dependencies on:
 - [Labels Module](https://github.com/terraform-az-modules/terraform-azure-tags): Provides resource tagging.
 
 
@@ -113,8 +217,8 @@ Refer [here](CHANGELOG.md).
 
 Big thanks to our contributors for elevating our project with their dedication and expertise! But, we do not wish to stop there, would like to invite contributions from the community in improving these projects and making them more versatile for better reach. Remember, every bit of contribution is immensely valuable, as, together, we are moving in only 1 direction, i.e. forward. 
 
-<a href="https://github.com/terraform-az-modules/terraform-azure-module-template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=terraform-az-modules/terraform-azure-module-template&max" />
+<a href="https://github.com/terraform-az-modules/terraform-azure-storage/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=terraform-az-modules/terraform-azure-storage-template&max" />
 </a>
 <br>
 <br>
@@ -129,9 +233,9 @@ Big thanks to our contributors for elevating our project with their dedication a
 
 
 ## Feedback 
-Spot a bug or have thoughts to share with us? Let's squash it together! Log it in our [issue tracker](https://github.com/terraform-az-modules/terraform-azure-module-template/issues), feel free to drop us an email at [hello@clouddrove.com](hello@clouddrove.com)).
+Spot a bug or have thoughts to share with us? Let's squash it together! Log it in our [issue tracker](https://github.com/terraform-az-modules/terraform-azure-storage/issues), feel free to drop us an email at [hello@clouddrove.com](hello@clouddrove.com)).
 
-Show some love with a ★ on [our GitHub](https://github.com/terraform-az-modules/terraform-azure-module-template)!  if our work has brightened your day! – your feedback fuels our journey!
+Show some love with a ★ on [our GitHub](https://github.com/terraform-az-modules/terraform-azure-storage)!  if our work has brightened your day! – your feedback fuels our journey!
 
 
 ## :rocket: Our Accomplishment
