@@ -108,10 +108,8 @@ module "vault" {
 ##-----------------------------------------------------------------------------
 module "storage" {
   providers = {
-    azurerm.dns_sub  = azurerm.peer,
     azurerm.main_sub = azurerm
   }
-  depends_on                    = [module.private_dns_zone]
   source                        = "../.."
   name                          = "core"
   environment                   = "dev"
@@ -145,7 +143,5 @@ module "storage" {
     { name = "fileshare", quota = "10" },
   ]
 
-  virtual_network_id         = module.vnet.vnet_id
-  subnet_id                  = module.subnet.default_subnet_id[0]
   log_analytics_workspace_id = module.log-analytics.workspace_id
 }

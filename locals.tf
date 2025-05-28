@@ -1,5 +1,5 @@
 locals {
-  name = var.custom_name != "" ? var.custom_name : module.labels.id
+  name = var.custom_name != null ? var.custom_name : module.labels.id
   create_key_vault                  = var.enabled && var.key_vault_rbac_auth_enabled == false
   create_storage_mgmt_policy        = var.enabled && var.management_policy_enable && length(var.management_policy) > 0
   create_monitor_diagnostic         = var.enabled && var.enable_diagnostic && length(var.datastorages) > 0

@@ -439,6 +439,12 @@ variable "enable_private_endpoint" {
   description = "enable or disable private endpoint to storage account"
 }
 
+variable "subnet_id" {
+  type        = string
+  default     = ""
+  description = "The resource ID of the subnet"
+}
+
 variable "private_dns_zone_ids" {
   description = "The IDs of a private DNS zone."
   type        = string
@@ -722,7 +728,6 @@ variable "rotation_policy" {
 ##-----------------------------------------------------------------------------
 ## Diagnostic Settings for Individual Storage Services
 ##-----------------------------------------------------------------------------
-
 # Enable flags per service
 variable "enable_blob_diagnostics" {
   type        = bool
