@@ -37,7 +37,6 @@ resource "azurerm_storage_account" "storage" {
   default_to_oauth_authentication   = var.default_to_oauth_authentication
   cross_tenant_replication_enabled  = var.cross_tenant_replication_enabled
   allow_nested_items_to_be_public   = var.allow_nested_items_to_be_public
-  allow_blob_public_access          =var.allow_blob_public_access
   large_file_share_enabled          = var.large_file_share_enabled
   edge_zone                         = var.edge_zone
   nfsv3_enabled                     = var.nfsv3_enabled

@@ -418,12 +418,6 @@ variable "allow_nested_items_to_be_public" {
   description = "Allow or disallow nested items within this Account to opt into being public. Defaults to true."
 }
 
-variable "allow_blob_public_access" {
-  type        = bool
-  default     = false
-  description = "Allow or disallow blob public access."
-}
-
 variable "allowed_copy_scope" {
   type        = string
   default     = "PrivateLink"
