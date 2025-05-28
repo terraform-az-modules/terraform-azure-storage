@@ -37,6 +37,7 @@ resource "azurerm_storage_account" "storage" {
   default_to_oauth_authentication   = var.default_to_oauth_authentication
   cross_tenant_replication_enabled  = var.cross_tenant_replication_enabled
   allow_nested_items_to_be_public   = var.allow_nested_items_to_be_public
+  allow_blob_public_access          =var.allow_blob_public_access
   large_file_share_enabled          = var.large_file_share_enabled
   edge_zone                         = var.edge_zone
   nfsv3_enabled                     = var.nfsv3_enabled
@@ -240,7 +241,7 @@ resource "azurerm_key_vault_key" "kvkey" {
   name            = var.resource_position_prefix ? format("kvk-%s", local.name) : format("%s-kvk", local.name)
   expiration_date = var.expiration_date
   key_vault_id    = var.key_vault_id
-  key_type        = "RSA"
+  key_type        = "RSA-HSM"
   key_size        = 2048
   tags            = module.labels.tags
   key_opts = [

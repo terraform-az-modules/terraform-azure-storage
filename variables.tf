@@ -100,7 +100,7 @@ variable "access_tier" {
 
 variable "account_replication_type" {
   type        = string
-  default     = "LRS"
+  default     = "GRS"
   description = "Defines the type of replication to use for this storage account. Valid options are LRS, GRS, RAGRS, ZRS, GZRS and RAGZRS."
 }
 
@@ -124,7 +124,7 @@ variable "min_tls_version" {
 
 variable "containers_list" {
   type        = list(object({ name = string, access_type = string }))
-  default     = []
+  default     = "private"
   description = "List of containers to create and their access levels."
 }
 
@@ -285,7 +285,7 @@ variable "queue_properties_logging" {
 
 variable "enable_queue_properties" {
   type        = bool
-  default     = false
+  default     = true
   description = "Enable or disable the creation of the queue properties"
 }
 
@@ -389,7 +389,7 @@ variable "expiration_date" {
 
 variable "shared_access_key_enabled" {
   type        = bool
-  default     = true
+  default     = false
   description = " Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is true."
 }
 variable "infrastructure_encryption_enabled" {
@@ -416,6 +416,12 @@ variable "allow_nested_items_to_be_public" {
   type        = bool
   default     = false
   description = "Allow or disallow nested items within this Account to opt into being public. Defaults to true."
+}
+
+variable "allow_blob_public_access" {
+  type        = bool
+  default     = false
+  description = "Allow or disallow blob public access."
 }
 
 variable "allowed_copy_scope" {
