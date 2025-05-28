@@ -5,7 +5,7 @@ provider "azurerm" {
 
 provider "azurerm" {
   features {}
-  alias           = "peer"
+  alias = "peer"
 }
 
 data "azurerm_client_config" "current_client_config" {}
@@ -48,8 +48,8 @@ module "subnet" {
   location             = module.resource_group.resource_group_location
   virtual_network_name = module.vnet.vnet_name
   service_endpoints    = ["Microsoft.Storage"]
-  subnet_names    = ["subnet1"]
-  subnet_prefixes = ["10.0.1.0/24"]
+  subnet_names         = ["subnet1"]
+  subnet_prefixes      = ["10.0.1.0/24"]
 }
 
 # ------------------------------------------------------------------------------

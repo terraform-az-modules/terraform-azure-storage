@@ -5,7 +5,7 @@ provider "azurerm" {
 
 provider "azurerm" {
   features {}
-  alias           = "peer"
+  alias = "peer"
 }
 
 data "azurerm_client_config" "current_client_config" {}
@@ -48,8 +48,8 @@ module "subnet" {
   location             = module.resource_group.resource_group_location
   virtual_network_name = module.vnet.vnet_name
   service_endpoints    = ["Microsoft.Storage"]
-  subnet_names    = ["subnet1"]
-  subnet_prefixes = ["10.0.1.0/24"]
+  subnet_names         = ["subnet1"]
+  subnet_prefixes      = ["10.0.1.0/24"]
 }
 
 ##----------------------------------------------------------------------------- 
@@ -129,9 +129,9 @@ module "storage" {
   }]
 
   ## customer_managed_key can only be set when the account_kind is set to StorageV2 or account_tier set to Premium, and the identity type is UserAssigned.
-  cmk_encryption_enabled       = true
-  key_vault_id                 = module.vault.id
-  management_policy_enable     = true
+  cmk_encryption_enabled   = true
+  key_vault_id             = module.vault.id
+  management_policy_enable = true
 
   ##   Storage Container
   containers_list = [
