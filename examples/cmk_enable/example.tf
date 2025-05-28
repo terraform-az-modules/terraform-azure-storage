@@ -64,7 +64,7 @@ module "storage" {
   admin_objects_ids             = [data.azurerm_client_config.current_client_config.object_id]
   network_rules = [
     {
-      default_action             = "Allow"
+      default_action             = "Deny"
       ip_rules                   = ["0.0.0.0/0"]
       virtual_network_subnet_ids = []
       bypass                     = ["AzureServices"]

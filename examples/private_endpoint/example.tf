@@ -1,11 +1,13 @@
 provider "azurerm" {
   features {}
   storage_use_azuread = true
+  subscription_id     = "1ac2caa4-336e-4daa-b8f1-0fbabe2d4b11"
 }
 
 provider "azurerm" {
   features {}
-  alias = "peer"
+  alias           = "peer"
+  subscription_id = "1ac2caa4-336e-4daa-b8f1-0fbabe2d4b11"
 }
 
 data "azurerm_client_config" "current_client_config" {}
@@ -91,7 +93,7 @@ module "storage" {
   subnet_id                     = module.subnet.default_subnet_id
   network_rules = [
     {
-      default_action             = "Allow"
+      default_action             = "Deny"
       ip_rules                   = ["0.0.0.0/0"]
       virtual_network_subnet_ids = []
       bypass                     = ["AzureServices"]
