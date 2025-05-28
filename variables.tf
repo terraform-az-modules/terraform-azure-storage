@@ -124,7 +124,7 @@ variable "min_tls_version" {
 
 variable "containers_list" {
   type        = list(object({ name = string, access_type = string }))
-  default     = "private"
+  default     = []
   description = "List of containers to create and their access levels."
 }
 
