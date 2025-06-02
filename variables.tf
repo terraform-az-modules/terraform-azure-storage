@@ -670,12 +670,6 @@ variable "alias_sub" {
   default = null
 }
 
-variable "diff_sub" {
-  type        = bool
-  default     = false
-  description = "The name of the addon vnet "
-}
-
 variable "management_policy_enable" {
   type    = bool
   default = false
@@ -691,12 +685,6 @@ variable "Metric_enable" {
   type        = bool
   default     = true
   description = "Is this Diagnostic Metric enabled? Defaults to true."
-}
-
-variable "multi_sub_vnet_link" {
-  type        = bool
-  default     = false
-  description = "Flag to control creation of vnet link for dns zone in different subscription"
 }
 
 variable "key_vault_rbac_auth_enabled" {
