@@ -20,7 +20,7 @@ module "labels" {
 resource "azurerm_storage_account" "storage" {
   provider                          = azurerm.main_sub
   count                             = var.enabled ? 1 : 0
-  name = substr(lower(replace(replace(var.resource_position_prefix ? format("ast%s", local.name) : format("%sast", local.name), "-", ""), " ", "")), 0, 24)
+  name                              = substr(lower(replace(replace(var.resource_position_prefix ? format("ast%s", local.name) : format("%sast", local.name), "-", ""), " ", "")), 0, 24)
   resource_group_name               = var.resource_group_name
   location                          = var.location
   account_kind                      = var.account_kind
