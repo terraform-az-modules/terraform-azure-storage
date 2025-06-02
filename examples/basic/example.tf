@@ -30,7 +30,7 @@ module "storage" {
   source                   = "../.."
   name                     = "app1"
   environment              = "test"
-  label_order              = ["name", "environment"]
+  label_order              = ["name", "environment", "location"]
   resource_group_name      = "test-rg"
   location                 = "Central India"
   account_kind             = "StorageV2"

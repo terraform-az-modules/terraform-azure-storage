@@ -33,7 +33,7 @@ module "vault" {
   source                      = "github.com/clouddrove/terraform-azure-key-vault.git?ref=master"
   name                        = "vae59605811"
   environment                 = "test"
-  label_order                 = ["name", "environment"]
+  label_order                 = ["name", "environment", "location"]
   resource_group_name         = module.resource_group.resource_group_name
   location                    = module.resource_group.resource_group_location
   admin_objects_ids           = [data.azurerm_client_config.current_client_config.object_id]
