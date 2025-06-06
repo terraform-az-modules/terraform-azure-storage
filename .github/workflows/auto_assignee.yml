@@ -13,4 +13,3 @@ jobs:
     with:
       assignees: 'clouddrove-ci'
       reviewers: '@terraform-az-modules/crew'
-
