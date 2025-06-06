@@ -12,11 +12,11 @@ provider "azurerm" {
 ## Resource Group module call
 ##-----------------------------------------------------------------------------
 module "resource_group" {
-  source      = "clouddrove/resource-group/azure"
-  version     = "1.0.2"
+  source      = "terraform-az-modules/resource-group/azure"
+  version     = "1.0.0"
   name        = "app1"
   environment = "test"
-  location    = "North Europe"
+  location    = "northeurope"
 }
 
 ##----------------------------------------------------------------------------- 
@@ -31,7 +31,7 @@ module "storage" {
   name                     = "app1"
   environment              = "test"
   label_order              = ["name", "environment", "location"]
-  resource_group_name      = "test-rg"
+  resource_group_name      = module.resource_group.resource_group_name
   location                 = "Central India"
   account_kind             = "StorageV2"
   account_tier             = "Standard"

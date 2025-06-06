@@ -14,19 +14,19 @@ data "azurerm_client_config" "current_client_config" {}
 ## Resource Group module call
 ##-----------------------------------------------------------------------------
 module "resource_group" {
-  source      = "clouddrove/resource-group/azure"
-  version     = "1.0.2"
+  source      = "terraform-az-modules/resource-group/azure"
+  version     = "1.0.0"
   name        = "app1"
   environment = "test"
-  location    = "North Europe"
+  location    = "northeurope"
 }
 
 ##----------------------------------------------------------------------------- 
 ## Virtual Network module call.
 ##-----------------------------------------------------------------------------
 module "vnet" {
-  source              = "clouddrove/vnet/azure"
-  version             = "1.0.4"
+  source              = "terraform-az-modules/vnet/azure"
+  version             = "1.0.0"
   name                = "app1"
   environment         = "test"
   label_order         = ["name", "environment", "location"]
@@ -43,7 +43,7 @@ module "subnet" {
   version              = "1.2.0"
   name                 = "app1"
   environment          = "test"
-  label_order          = ["name", "environment", "location"]
+  label_order          = ["name", "environment"]
   resource_group_name  = module.resource_group.resource_group_name
   location             = module.resource_group.resource_group_location
   virtual_network_name = module.vnet.vnet_name
@@ -60,7 +60,7 @@ module "log-analytics" {
   version                          = "2.0.0"
   name                             = "app1"
   environment                      = "test"
-  label_order                      = ["name", "environment", "location"]
+  label_order                      = ["name", "environment"]
   create_log_analytics_workspace   = true # Set  it 'false' if you don't want resource log-analytics workspace to be created
   log_analytics_workspace_sku      = "PerGB2018"
   daily_quota_gb                   = "-1"
@@ -83,9 +83,9 @@ module "vault" {
   }
 
   source                      = "github.com/clouddrove/terraform-azure-key-vault.git?ref=master"
-  name                        = "vae59605811"
+  name                        = "vae59605811-neww"
   environment                 = "test"
-  label_order                 = ["name", "environment", "location"]
+  label_order                 = ["name", "environment"]
   resource_group_name         = module.resource_group.resource_group_name
   location                    = module.resource_group.resource_group_location
   admin_objects_ids           = [data.azurerm_client_config.current_client_config.object_id]

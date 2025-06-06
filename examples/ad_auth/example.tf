@@ -14,11 +14,11 @@ data "azurerm_client_config" "current_client_config" {}
 ## Resource Group module call
 ##-----------------------------------------------------------------------------
 module "resource_group" {
-  source      = "clouddrove/resource-group/azure"
-  version     = "1.0.2"
+  source      = "terraform-az-modules/resource-group/azure"
+  version     = "1.0.0"
   name        = "app1"
   environment = "test"
-  location    = "North Europe"
+  location    = "northeurope"
 }
 
 ##----------------------------------------------------------------------------- 
@@ -49,13 +49,16 @@ module "storage" {
       bypass                     = ["AzureServices"]
   }]
 
-  # Active Directory 
   file_share_authentication = {
-    directory_type                 = "AD"
+    directory_type                 = "AADDS"
     default_share_level_permission = "StorageFileDataSmbShareContributor"
     active_directory = {
-      domain_name = "corp.example.com"
-      domain_guid = "12345678-1234-1234-1234-123456789abc"
+      storage_sid         = "S-1-5-21-1234567890-1234567890-1234567890-1234"
+      domain_name         = "corp.example.com"
+      domain_sid          = "S-1-5-21-234567890-234567890-234567890"
+      domain_guid         = "12345678-1234-1234-1234-123456789abc"
+      forest_name         = "example.com"
+      netbios_domain_name = "EXAMPLE"
     }
   }
 

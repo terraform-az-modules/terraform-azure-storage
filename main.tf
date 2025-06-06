@@ -2,8 +2,9 @@
 ## Tagging Module – Applies standard tags to all resources
 ##-----------------------------------------------------------------------------
 module "labels" {
-  source          = "terraform-az-modules/tags/azure"
-  version         = "1.0.0"
+  # source          = "terraform-az-modules/tags/azure"
+  # version         = "1.0.0"
+  source          = "git::https://github.com/terraform-az-modules/terraform-azure-tags.git?ref=master"
   name            = var.custom_name == null ? var.name : var.custom_name
   location        = var.location
   environment     = var.environment
@@ -240,9 +241,10 @@ resource "azurerm_key_vault_key" "kvkey" {
   name            = var.resource_position_prefix ? format("kvk-%s", local.name) : format("%s-kvk", local.name)
   expiration_date = var.expiration_date
   key_vault_id    = var.key_vault_id
-  key_type        = "RSA-HSM"
-  key_size        = 2048
-  tags            = module.labels.tags
+  # key_type        = "RSA-HSM"
+  key_type = "RSA"
+  key_size = 2048
+  tags     = module.labels.tags
   key_opts = [
     "decrypt",
     "encrypt",
@@ -373,7 +375,6 @@ resource "azurerm_storage_management_policy" "lifecycle_management" {
           tier_to_archive_after_days_since_last_access_time_greater_than = it.value.tier_to_archive_after_days_since_last_access_time_greater_than
           tier_to_cold_after_days_since_creation_greater_than            = it.value.tier_to_cold_after_days_since_creation_greater_than
           tier_to_cold_after_days_since_last_access_time_greater_than    = it.value.tier_to_cold_after_days_since_last_access_time_greater_than
-          tier_to_cool_after_days_since_creation_greater_than            = it.value.tier_to_cool_after_days_since_creation_greater_than
           tier_to_cool_after_days_since_last_access_time_greater_than    = it.value.tier_to_cool_after_days_since_last_access_time_greater_than
 
         }
@@ -478,7 +479,6 @@ resource "azurerm_monitor_diagnostic_setting" "datastorage" {
       enabled  = true
     }
   }
-
 }
 
 ##----------------------------------------------------------------------------- 

@@ -392,26 +392,31 @@ variable "shared_access_key_enabled" {
   default     = false
   description = " Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is true."
 }
+
 variable "infrastructure_encryption_enabled" {
   type        = bool
   default     = true
   description = " Is infrastructure encryption enabled? Changing this forces a new resource to be created. Defaults to false."
 }
+
 variable "public_network_access_enabled" {
   type        = bool
   default     = true
   description = "Whether the public network access is enabled? Defaults to true."
 }
+
 variable "default_to_oauth_authentication" {
   type        = bool
   default     = false
   description = "Default to Azure Active Directory authorization in the Azure portal when accessing the Storage Account. The default value is false"
 }
+
 variable "cross_tenant_replication_enabled" {
   type        = bool
   default     = true
   description = "Should cross Tenant replication be enabled? Defaults to true."
 }
+
 variable "allow_nested_items_to_be_public" {
   type        = bool
   default     = false
@@ -545,7 +550,7 @@ variable "file_share_authentication" {
     directory_type                 = string
     default_share_level_permission = optional(string, "None")
     active_directory = optional(object({
-      storage_sid         = optional(string)
+      storage_sid         = string
       domain_name         = string
       domain_sid          = optional(string)
       domain_guid         = optional(string)
